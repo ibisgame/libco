@@ -36,8 +36,6 @@ set_target_properties(colib_shared PROPERTIES CLEAN_DIRECT_OUTPUT 1)
 # For mac osx, the extension name will be .dylib
 set_target_properties(colib_shared PROPERTIES VERSION ${LIBCO_VERSION} SOVERSION ${LIBCO_VERSION})
 
-
-
 # Macro for add example target
 macro(add_example_target EXAMPLE_TARGET)
     add_executable("example_${EXAMPLE_TARGET}" "example_${EXAMPLE_TARGET}.cpp")
@@ -53,3 +51,10 @@ add_example_target(poll)
 add_example_target(setenv)
 add_example_target(specific)
 add_example_target(thread)
+
+# 安装库
+file(GLOB coheaders "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+install(FILES ${coheaders} DESTINATION "${CMAKE_INSTALL_PREFIX}/include/libco/")
+
+set(colibs "${CMAKE_BINARY_DIR}/libcolib.a" "${CMAKE_BINARY_DIR}/libcolib.so" "${CMAKE_BINARY_DIR}/libcolib.so.0.5")
+install(FILES ${colibs} DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/")
